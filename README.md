@@ -1,26 +1,77 @@
 # StudyPilot — Document-Grounded Study Assistant
 
-A local-first study tool that searches user-provided notes and shows matching evidence passages.
+> Search your own study notes and inspect the passages that support a result.
 
-## Run locally
-Open `index.html` in a browser. Import `.txt`, `.md` or `.csv` notes, or paste text into the editor. A local server can be run with `python3 -m http.server 8000`.
+**Live demo:** [https://khare-pratham.github.io/studypilot/](https://khare-pratham.github.io/studypilot/)
+
+## Overview
+
+StudyPilot is a local-first study prototype. Users can paste notes or import text-based files, ask a question, and retrieve matching passages with document titles. It reports when no relevant evidence is found rather than generating an unsupported answer.
 
 ## Features
-- Add notes by pasting text or importing text/Markdown/CSV files
-- Split material into passages
-- Rank passages by keyword overlap
-- Show matching source passages and document titles
-- Does not invent a response if no passages match
-- No server, API key, or upload of notes
 
-## Important scope
-This is a transparent retrieval baseline, not a generative AI application. It does not parse PDFs, use embeddings, call an LLM, or provide semantic search. The current library exists only for the current page session.
+- Add notes by pasting text and giving the document a title
+- Import text, Markdown and text-based CSV files
+- Split documents into manageable passages
+- Rank passages using keyword overlap
+- Display matching source passages and document titles
+- Return a no-match message when no passage has matching keywords
+- Process notes in the browser without uploading them to a server
 
-## Next steps
-- Add automated tests and a more robust tokeniser
-- Add PDF parsing with a suitable library and clear privacy disclosures
-- Add semantic retrieval (embeddings) and an LLM only with source-grounded prompting and evaluation
-- Persist documents safely, add document deletion/export controls, and assess answer faithfulness
+## Tech stack
 
-## Stack
-HTML, CSS, JavaScript, browser File API and keyword-based retrieval.
+`HTML5` · `CSS3` · `Vanilla JavaScript` · `Browser File API` · `Keyword-based retrieval`
+
+## How it works
+
+The app stores documents in in-memory JavaScript state for the current page session. It splits notes into passages, tokenises the question and passage text, scores passages using keyword overlap and an exact-phrase bonus, and renders the best matching evidence. It does not call an AI model or upload documents.
+
+## Run locally
+
+1. Clone or download this repository.
+2. Open `index.html` in a browser.
+
+If local-file restrictions interfere, run this from the project folder:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then visit `http://localhost:8000`.
+
+## Test checklist
+
+- [ ] Add notes and confirm the document appears in the library
+- [ ] Import a .txt or .md file and confirm its content can be searched
+- [ ] Ask a question using terms present in notes and inspect the retrieved passage
+- [ ] Ask an unrelated question and confirm a no-match message
+- [ ] Remove a document and verify it is no longer searchable
+- [ ] Clear the library and verify documents are removed from the session
+
+## Known limitations
+
+- Keyword retrieval only; paraphrases and semantic matches can be missed
+- Results are retrieved excerpts, not generated explanations or verified answers
+- No LLM, embeddings, semantic search, PDF parsing or cross-document reasoning
+- Documents are held in page-session memory and are lost on refresh
+- Large-file support is intentionally limited
+
+## Potential improvements
+
+- Add automated tests for tokenisation, ranking and no-match behaviour
+- Improve retrieval scoring and handle common word variants
+- Add PDF text extraction with clear user-facing limits
+- Evaluate semantic retrieval and LLM integration with source-grounding tests
+
+## Screenshots
+
+Add screenshots captured from your running application. Suggested paths: `docs/screenshots/desktop.png` and `docs/screenshots/mobile.png`.
+After uploading a screenshot, embed it with Markdown, for example:
+
+```markdown
+![Desktop dashboard](docs/screenshots/desktop.png)
+```
+
+## Project status
+
+Portfolio prototype. This README distinguishes implemented features from potential future improvements.

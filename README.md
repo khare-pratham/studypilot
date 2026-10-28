@@ -2,7 +2,7 @@
 
 > Search your own study notes and inspect the passages that support a result.
 
-**Live demo:** [https://khare-pratham.github.io/studypilot/](https://khare-pratham.github.io/studypilot/)
+**Live demo:** https://khare-pratham.github.io/studypilot/
 
 ## Overview
 
@@ -11,42 +11,57 @@ StudyPilot is a local-first study prototype. Users can paste notes or import tex
 ## Features
 
 - Add notes by pasting text and giving the document a title
-- Import text, Markdown and text-based CSV files
-- Split documents into manageable passages
-- Rank passages using keyword overlap
-- Display matching source passages and document titles
+- Import text, Markdown and text-based CSV files (maximum 500 KB per imported file)
+- Split long documents into manageable passages
+- Rank passages using keyword overlap and an exact-phrase bonus
+- Display matching source passages, document titles and matched terms
 - Return a no-match message when no passage has matching keywords
+- Validate title/content and handle unsupported, oversized or unreadable imports
+- Escape user-provided content before rendering it into the page
 - Process notes in the browser without uploading them to a server
+- Automated Node.js tests and GitHub Actions workflow
 
 ## Tech stack
 
-`HTML5` · `CSS3` · `Vanilla JavaScript` · `Browser File API` · `Keyword-based retrieval`
+`HTML5` · `CSS3` · `Vanilla JavaScript` · `Browser File API` · `Node.js test runner` · `GitHub Actions`
 
 ## How it works
 
-The app stores documents in in-memory JavaScript state for the current page session. It splits notes into passages, tokenises the question and passage text, scores passages using keyword overlap and an exact-phrase bonus, and renders the best matching evidence. It does not call an AI model or upload documents.
+The app stores documents in in-memory JavaScript state for the current page session. `studypilot-core.js` splits notes into passages, tokenises the question and passage text, scores passages using keyword overlap and an exact-phrase bonus, and returns the best matching evidence. Results include source titles and matched terms. The app does not call an AI model or upload documents.
 
 ## Run locally
 
 1. Clone or download this repository.
-2. Open `index.html` in a browser.
+2. Open `index.html` in a browser, or run a local static server:
 
-If local-file restrictions interfere, run this from the project folder:
+   ```bash
+   python3 -m http.server 8000
+   ```
+
+3. Visit `http://localhost:8000`.
+
+## Run automated tests
+
+Requires Node.js 22 or another Node version with the built-in `node:test` runner.
 
 ```bash
-python3 -m http.server 8000
+node --check studypilot-core.js
+node --test tests/studypilot-core.test.cjs
 ```
 
-Then visit `http://localhost:8000`.
+GitHub Actions runs these checks on pushes and pull requests to `main`, and can be started manually from the Actions tab.
 
-## Test checklist
+## Manual test checklist
 
 - [ ] Add notes and confirm the document appears in the library
-- [ ] Import a .txt or .md file and confirm its content can be searched
+- [ ] Try blank title/content and confirm validation messages appear
+- [ ] Import a `.txt` or `.md` file and search its content
 - [ ] Ask a question using terms present in notes and inspect the retrieved passage
 - [ ] Ask an unrelated question and confirm a no-match message
 - [ ] Remove a document and verify it is no longer searchable
 - [ ] Clear the library and verify documents are removed from the session
+- [ ] Try a file over 500 KB or an unsupported extension and confirm a useful error
+- [ ] Test a narrow mobile viewport and keyboard focus
 
 ## Known limitations
 
@@ -56,16 +71,9 @@ Then visit `http://localhost:8000`.
 - Documents are held in page-session memory and are lost on refresh
 - Large-file support is intentionally limited
 
-## Potential improvements
-
-- Add automated tests for tokenisation, ranking and no-match behaviour
-- Improve retrieval scoring and handle common word variants
-- Add PDF text extraction with clear user-facing limits
-- Evaluate semantic retrieval and LLM integration with source-grounding tests
-
 ## Screenshots
 
-![Studypilot dashboard](studypilot-dashboard.png)
+![StudyPilot dashboard](studypilot-dashboard.png)
 
 ## Project status
 

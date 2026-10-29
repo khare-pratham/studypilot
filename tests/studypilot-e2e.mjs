@@ -25,7 +25,7 @@ async function main() {
     await page.getByLabel("Question or topic").fill("What are microservices?");
     await page.getByRole("button", { name: "Find an answer" }).click();
     await page.locator("#answerArea").getByText("Best matching passage from").waitFor();
-    await page.locator("#answerArea").getByText("Microservices split an application into independently deployable services", { exact: false }).waitFor();
+    await page.locator("#answerArea .answer-text").filter({ hasText: "Microservices split an application into independently deployable services" }).first().waitFor();
     await page.locator("#answerArea").getByText("Matched terms:").waitFor();
     console.log("PASS: matching evidence and source title are shown");
 

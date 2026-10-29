@@ -11,6 +11,7 @@ async function main() {
     await page.goto(baseUrl, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /Stay grounded in your notes/ }).waitFor();
 
+    await page.getByLabel("Question or topic").fill("What are the key concepts?");
     await page.getByRole("button", { name: "Find an answer" }).click();
     await page.locator("#answerArea").getByText("Add study notes first, then ask your question.").waitFor();
     console.log("PASS: asking without notes gives a clear prompt");

@@ -12,7 +12,7 @@ async function main() {
     await page.getByRole("heading", { name: /Stay grounded in your notes/ }).waitFor();
 
     await page.getByRole("button", { name: "Find an answer" }).click();
-    await page.getByText("Add study notes first, then ask your question.").waitFor();
+    await page.locator("#answerArea").getByText("Add study notes first, then ask your question.").waitFor();
     console.log("PASS: asking without notes gives a clear prompt");
 
     await page.getByLabel("Document title").fill("Architecture Notes");
@@ -23,14 +23,14 @@ async function main() {
 
     await page.getByLabel("Question or topic").fill("What are microservices?");
     await page.getByRole("button", { name: "Find an answer" }).click();
-    await page.getByText("Best matching passage from").waitFor();
-    await page.getByText("Microservices split an application into independently deployable services", { exact: false }).waitFor();
-    await page.getByText("Matched terms:").waitFor();
+    await page.locator("#answerArea").getByText("Best matching passage from").waitFor();
+    await page.locator("#answerArea").getByText("Microservices split an application into independently deployable services", { exact: false }).waitFor();
+    await page.locator("#answerArea").getByText("Matched terms:").waitFor();
     console.log("PASS: matching evidence and source title are shown");
 
     await page.getByLabel("Question or topic").fill("quantum astronomy");
     await page.getByRole("button", { name: "Find an answer" }).click();
-    await page.getByText(/could not find a passage with matching keywords/i).waitFor();
+    await page.locator("#answerArea").getByText(/could not find a passage with matching keywords/i).waitFor();
     console.log("PASS: unrelated questions do not fabricate an answer");
 
     await page.getByLabel("Document title").fill("");

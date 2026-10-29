@@ -1,5 +1,7 @@
 # StudyPilot — Document-Grounded Study Assistant
 
+[![StudyPilot Tests](https://github.com/khare-pratham/studypilot/actions/workflows/studypilot-tests.yml/badge.svg)](https://github.com/khare-pratham/studypilot/actions/workflows/studypilot-tests.yml) [![Live demo](https://img.shields.io/badge/demo-live-147d6f)](https://khare-pratham.github.io/studypilot/)
+
 > Search your own study notes and inspect the passages that support a result.
 
 **Live demo:** https://khare-pratham.github.io/studypilot/
@@ -52,7 +54,9 @@ node tests/studypilot-e2e.mjs
 
 GitHub Actions runs core and Playwright browser checks on pushes and pull requests to `main`, and can be started manually from the Actions tab.
 
-## Manual test checklist
+## Remaining manual checks
+
+The automated browser suite covers the main note retrieval and library-management flows. These checks are not yet automated and remain manual follow-ups.
 
 - [x] Browser test: add notes and confirm the document appears in the library
 - [x] Browser test: verify blank-title validation

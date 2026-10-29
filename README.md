@@ -23,7 +23,7 @@ StudyPilot is a local-first study prototype. Users can paste notes or import tex
 
 ## Tech stack
 
-`HTML5` · `CSS3` · `Vanilla JavaScript` · `Browser File API` · `Node.js test runner` · `GitHub Actions`
+`HTML5` · `CSS3` · `Vanilla JavaScript` · `Browser File API` · `Node.js test runner` · `Playwright` · `GitHub Actions`
 
 ## How it works
 
@@ -47,19 +47,20 @@ Requires Node.js 22 or another Node version with the built-in `node:test` runner
 ```bash
 node --check studypilot-core.js
 node --test tests/studypilot-core.test.cjs
+node tests/studypilot-e2e.mjs
 ```
 
-GitHub Actions runs these checks on pushes and pull requests to `main`, and can be started manually from the Actions tab.
+GitHub Actions runs core and Playwright browser checks on pushes and pull requests to `main`, and can be started manually from the Actions tab.
 
 ## Manual test checklist
 
-- [ ] Add notes and confirm the document appears in the library
-- [ ] Try blank title/content and confirm validation messages appear
+- [x] Browser test: add notes and confirm the document appears in the library
+- [x] Browser test: verify blank-title validation
 - [ ] Import a `.txt` or `.md` file and search its content
-- [ ] Ask a question using terms present in notes and inspect the retrieved passage
-- [ ] Ask an unrelated question and confirm a no-match message
-- [ ] Remove a document and verify it is no longer searchable
-- [ ] Clear the library and verify documents are removed from the session
+- [x] Browser test: retrieve matching evidence with its source title
+- [x] Browser test: unrelated question produces a no-match message
+- [x] Browser test: remove a document and verify its evidence is no longer searchable
+- [x] Browser test: clear the library and verify session documents are removed
 - [ ] Try a file over 500 KB or an unsupported extension and confirm a useful error
 - [ ] Test a narrow mobile viewport and keyboard focus
 

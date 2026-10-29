@@ -45,7 +45,7 @@ async function main() {
     await page.getByRole("button", { name: "Add to library" }).click();
     await page.getByLabel("Question or topic").fill("databases");
     await page.getByRole("button", { name: "Find an answer" }).click();
-    await page.getByText("Second Notes", { exact: true }).waitFor();
+    await page.getByRole("button", { name: "Remove Second Notes" }).waitFor();
 
     await page.getByRole("button", { name: "Remove Second Notes" }).click();
     await page.getByLabel("Question or topic").fill("databases");
